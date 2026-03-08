@@ -1,12 +1,12 @@
-import { CharacterRepository } from "../domain/character-repository";
-import { Character } from "../domain/character.model";
-import characterList from '../data/characters.json';
 import { Injectable } from "@angular/core";
+import { CharacterGateway} from "../../domain/models/character.gateway";
+import { Character } from "../../domain/models/character.model";
+import { CharacterDto } from "../models/character.model"
+import characterList from '../../data/characters.json';
 import { delay } from "../shared/helpers";
-import { CharacterDto } from "./models/character.model";
 
 @Injectable()
-export class CharacterInMemory implements CharacterRepository {
+export class CharacterInMemory implements CharacterGateway {
   async getAll(): Promise<Character[]> {
     await delay(1000);
     return (characterList as CharacterDto[]).map(obj => this.fromObject(obj));
@@ -14,9 +14,9 @@ export class CharacterInMemory implements CharacterRepository {
 
   async getOneById(id: string): Promise<Character | null> {
     await delay(1000);
-    const character = (characterList as CharacterDto[]).find(c => c.id.toString() === id);
+    const character = (characterList).find(c => c.id.toString() === id);
     return character
-      ? this.fromObject(character)
+      ? this.fromObject(character as CharacterDto)
       : null;
   }
 

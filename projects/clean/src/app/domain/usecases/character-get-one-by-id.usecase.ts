@@ -1,14 +1,13 @@
 import { inject, Injectable } from '@angular/core';
-import { CharacterRepository } from '../../domain/character-repository';
+import { CharacterGateway } from '../../domain/models/character.gateway';
 
 @Injectable()
 export class CharacterGetOneById {
   // constructor(private characterRepository: CharacterRepository) {}
 
-  private readonly _characterRepository = inject(CharacterRepository);
-
+  private readonly _characterGateway = inject(CharacterGateway);
   async execute(id: string) {
-    return this._characterRepository.getOneById(id);
+    return this._characterGateway.getOneById(id);
   }
 }
 

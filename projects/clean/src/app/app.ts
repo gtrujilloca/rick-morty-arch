@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, resource, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { CharacterGetAll } from './application/character/character-get-all';
-import { CharacterRepository } from './domain/character-repository';
-import { CharacterInMemory } from './infrastructure/character-in-memory.repository';
 import { JsonPipe } from '@angular/common';
-import { CharacterRest } from './infrastructure/character-rest.repository';
+import { RouterOutlet } from '@angular/router';
+import { CharacterGetAll } from './domain/usecases/character-get-all.usecase';
+import { CharacterGateway } from './domain/models/character.gateway';
+import { CharacterInMemory } from './infrastructure/driven-adapters/character-in-memory';
+import { CharacterRest } from './infrastructure/driven-adapters/character-rest';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +31,7 @@ export class App {
   // private readonly characterRestRepository: CharacterRepository = new CharacterRest();
   // private readonly getAllCharactersUseCase: CharacterGetAll = new CharacterGetAll(this.characterRestRepository);
   private readonly getAllCharactersUseCase: CharacterGetAll = new CharacterGetAll();
-  protected readonly title = signal('Hexagonal Architecture');
+  protected readonly title = signal('Clean Architecture');
 
   protected readonly allCharactersResource = resource({
     loader: () => this.getAllCharactersUseCase.execute(),

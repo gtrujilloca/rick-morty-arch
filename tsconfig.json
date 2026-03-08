@@ -26,6 +26,9 @@
   "references": [
     {
       "path": "./projects/hexagonal/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/clean/tsconfig.app.json"
     }
   ]
 }

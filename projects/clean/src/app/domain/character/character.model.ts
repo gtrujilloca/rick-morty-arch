@@ -1,14 +1,14 @@
 export interface Character {
-  id: string,
-  name: string,
-  status: string,
-  species: string,
-  gender: string,
-  origin: CharacterOrigin,
-  image: string,
-  episode: string[],
-  url: string,
-  created: string
+  id: string;
+  name: string;
+  status: Status;
+  species: Species;
+  gender: Gender;
+  origin: CharacterOrigin;
+  image: string;
+  episode: string[];
+  url: string;
+  created: string;
 }
 
 export interface CharacterOrigin {

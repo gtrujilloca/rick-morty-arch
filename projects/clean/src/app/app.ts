@@ -1,10 +1,7 @@
-import { ChangeDetectionStrategy, Component, resource, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, resource, signal } from '@angular/core';
 import { JsonPipe } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { CharacterGetAll } from './domain/usecases/character-get-all.usecase';
-import { CharacterGateway } from './domain/models/character.gateway';
-import { CharacterInMemory } from './infrastructure/driven-adapters/character-in-memory';
-import { CharacterRest } from './infrastructure/driven-adapters/character-rest';
+import { CharacterGetAll } from './application/usecases/character-get-all.usecase';
 
 @Component({
   selector: 'app-root',
@@ -27,10 +24,9 @@ import { CharacterRest } from './infrastructure/driven-adapters/character-rest';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
-  // private readonly characterInMemoryRepository: CharacterRepository = new CharacterInMemory();
-  // private readonly characterRestRepository: CharacterRepository = new CharacterRest();
-  // private readonly getAllCharactersUseCase: CharacterGetAll = new CharacterGetAll(this.characterRestRepository);
-  private readonly getAllCharactersUseCase: CharacterGetAll = new CharacterGetAll();
+  // El use case se inyecta via DI — Angular resuelve la dependencia CharacterGateway
+  // que fue registrada en app.config.ts: { provide: CharacterGateway, useClass: CharacterRest }
+  private readonly getAllCharactersUseCase = inject(CharacterGetAll);
   protected readonly title = signal('Clean Architecture');
 
   protected readonly allCharactersResource = resource({

@@ -1,5 +1,5 @@
 import { CharacterRepository } from "../domain/character-repository";
-import { Character } from "../domain/character.model";
+import { Character, Gender, Species, Status } from "../domain/character.model";
 import characterList from '../data/characters.json';
 import { Injectable } from "@angular/core";
 import { delay } from "../shared/helpers";
@@ -37,9 +37,9 @@ export class CharacterInMemory implements CharacterRepository {
     return {
       id: id.toString(),
       name,
-      status,
-      species,
-      gender,
+      status: status as unknown as Status,
+      species: species as unknown as Species,
+      gender: gender as unknown as Gender,
       origin,
       image,
       episode,

@@ -1,9 +1,9 @@
 export interface Character {
   id: string;
   name: string;
-  status: string;
-  species: string;
-  gender: string;
+  status: Status;
+  species: Species;
+  gender: Gender;
   origin: CharacterOrigin;
   image: string;
   episode: string[];

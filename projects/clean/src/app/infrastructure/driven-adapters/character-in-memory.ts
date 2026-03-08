@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { CharacterGateway} from "../../domain/models/character.gateway";
-import { Character } from "../../domain/models/character.model";
+import { CharacterGateway} from "../../domain/character/character.gateway";
+import { Character, Gender, Species, Status } from "../../domain/character/character.model";
 import { CharacterDto } from "../models/character.model"
 import characterList from '../../data/characters.json';
 import { delay } from "../shared/helpers";
@@ -37,9 +37,9 @@ export class CharacterInMemory implements CharacterGateway {
     return {
       id: id.toString(),
       name,
-      status,
-      species,
-      gender,
+      status: status as unknown as Status,
+      species: species as unknown as Species,
+      gender: gender as unknown as Gender,
       origin,
       image,
       episode,

@@ -1,6 +1,6 @@
 import { CharacterRepository } from '../domain/character-repository';
 import { CharacterDto, CharacterResponse  } from './models/character.model';
-import { Character } from '../domain/character.model';
+import { Character, Gender, Species, Status } from '../domain/character.model';
 import { Injectable } from '@angular/core';
 
 @Injectable()
@@ -8,6 +8,9 @@ export class CharacterRest implements CharacterRepository {
   private readonly BASE_URL = 'https://rickandmortyapi.com/api/character';
   async getAll(): Promise<Character[]> {
     const response = await fetch(this.BASE_URL);
+    if (!response.ok) {
+      throw new Error(`Error fetching characters: ${response.status} ${response.statusText}`);
+    }
     const data: CharacterResponse = await response.json();
 
     return data.results.map((dto) => this.fromObject(dto));
@@ -18,6 +21,9 @@ export class CharacterRest implements CharacterRepository {
     if (response.status === 404) {
       return null;
     }
+    if (!response.ok) {
+      throw new Error(`Error fetching character ${id}: ${response.status} ${response.statusText}`);
+    }
     const dto: CharacterDto = await response.json();
     return this.fromObject(dto);
   }
@@ -27,9 +33,9 @@ export class CharacterRest implements CharacterRepository {
     return {
       id: id.toString(),
       name,
-      status,
-      species,
-      gender,
+      status: status as unknown as Status,
+      species: species as unknown as Species,
+      gender: gender as unknown as Gender,
       origin,
       image,
       episode,

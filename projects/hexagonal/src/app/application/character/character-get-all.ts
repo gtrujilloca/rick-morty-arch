@@ -1,6 +1,7 @@
-import { inject } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { CharacterRepository } from "../../domain/character-repository";
 
+@Injectable()
 export class CharacterGetAll {
   // constructor(private characterRepository: CharacterRepository) {}
 

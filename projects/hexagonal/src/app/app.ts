@@ -1,10 +1,7 @@
-import { ChangeDetectionStrategy, Component, resource, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, resource, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CharacterGetAll } from './application/character/character-get-all';
-import { CharacterRepository } from './domain/character-repository';
-import { CharacterInMemory } from './infrastructure/character-in-memory.repository';
 import { JsonPipe } from '@angular/common';
-import { CharacterRest } from './infrastructure/character-rest.repository';
+import { CharacterGetAll } from './application/character/character-get-all';
 
 @Component({
   selector: 'app-root',
@@ -27,10 +24,9 @@ import { CharacterRest } from './infrastructure/character-rest.repository';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
-  // private readonly characterInMemoryRepository: CharacterRepository = new CharacterInMemory();
-  // private readonly characterRestRepository: CharacterRepository = new CharacterRest();
-  // private readonly getAllCharactersUseCase: CharacterGetAll = new CharacterGetAll(this.characterRestRepository);
-  private readonly getAllCharactersUseCase: CharacterGetAll = new CharacterGetAll();
+  // El use case se inyecta via DI — Angular resuelve la dependencia CharacterRepository
+  // que fue registrada en app.config.ts: { provide: CharacterRepository, useClass: CharacterRest }
+  private readonly getAllCharactersUseCase = inject(CharacterGetAll);
   protected readonly title = signal('Hexagonal Architecture');
 
   protected readonly allCharactersResource = resource({
